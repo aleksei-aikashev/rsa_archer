@@ -1,0 +1,9 @@
+To run this tests you will need pytest installed.
+
+This tests also needs a "config.py" file with five variables:
+
+USERNAME = 'api by default'
+PASSWORD = 'password'
+ARCHER_DOMAIN = 'domain name without http://'
+INSTANCE_NAME = 'find it in archer admin console'
+APPLICATION = "your app"
