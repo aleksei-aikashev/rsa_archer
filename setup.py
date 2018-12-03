@@ -10,10 +10,10 @@ requires = [
 
 setup(
 		name='rsa_archer',
-		version='0.2.1',
+		version='0.1.2',
 		author='Aleksei Aikashev',
 		author_email='a.aykashev@gmail.com',
-		description='Poorly written RSA Archer REST API library with NO Tests',
+		description='RSA Archer REST and GRC API library',
 		long_description=readme(),
 		long_description_content_type="text/markdown",
 		url='https://github.com/mwa21/rsa_archer',

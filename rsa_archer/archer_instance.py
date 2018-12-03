@@ -522,7 +522,7 @@ class ArcherInstance:
 				print('Please choose your key_field above: {"KEY_FIELD": "unique value"}')
 				break
 
-		log.info("Updated the mapping between record id and %s", key_value_field)
+		log.info("Updated the mapping between record id and KEY_FIELD")
 
 	def get_record_id_by_unique_value(self, key_value_field):
 		"""
