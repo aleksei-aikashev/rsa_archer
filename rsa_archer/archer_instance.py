@@ -278,6 +278,23 @@ class ArcherInstance:
 		"""
 		return self.vl_name_to_vl_id[vl_field_name]
 
+	def get_value_id_by_field_name_and_value(self,field_name, value):
+		values_list_id = self.get_vl_id_by_field_name(field_name)
+		api_url = self.api_url_base + "core/system/valueslistvalue/flat/valueslist/" + str(values_list_id)
+
+		try:
+			response = requests.get(api_url, headers=self.header, verify=False)
+			data = json.loads(response.content.decode("utf-8"))
+
+			for ind_value in data:
+				if  ind_value["RequestedObject"]["Name"]== value:
+					ret_arr = []
+					ret_arr.append(ind_value["RequestedObject"]["Id"])
+					return ret_arr
+
+		except Exception as e:
+			log.error("Function get_value_id_by_field_name_and_value didn't worked, %s", e)
+
 	def get_field_id_by_name(self, field_name, sub_form_name=None):
 		"""
 		:param sub_form_name: Add only if you need id of a subform of application, how you see it on the app
