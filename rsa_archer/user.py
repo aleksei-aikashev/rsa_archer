@@ -123,6 +123,25 @@ class User:
 				print(response)
 				log.error("User %s can not be activated", self.user_id)
 			else:
-				log.info("User is %s activated", self.get_user_email())
+				log.info("User %s is activated", self.get_gisplay_name())
 		except Exception as e:
 			log.error("Exception in activate_user() %s", e)
+
+	def deactivate_user(self):
+		"""
+		:return: log message of success or failure
+		"""
+		post_header = dict(self.archer_instance.header)
+		del post_header["X-Http-Method-Override"]
+
+		api_url = f"{self.archer_instance.api_url_base}core/system/user/status/inactive/{self.user_id}"
+
+		try:
+			response = requests.post(api_url, headers=post_header, verify=False)
+			if response.status_code != 200:
+				print(response)
+				log.error("User %s can not be deactivated", self.user_id)
+			else:
+				log.info("User %s is deactivated", self.get_gisplay_name())
+		except Exception as e:
+			log.error("Exception in deactivate_user() %s", e)
