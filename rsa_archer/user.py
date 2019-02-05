@@ -51,13 +51,25 @@ class User:
 		return self.user_id
 
 	def get_gisplay_name(self):
-		return self.json["DisplayName"]
+		try:
+			return self.json["DisplayName"]
+		except:
+			log.error("Returning None for DisplayName for %s", self.user_id)
+			return None
 
 	def get_username(self):
-		return self.json["UserName"]
+		try:
+			return self.json["UserName"]
+		except:
+			log.error("Returning None for UserName for %s", self.get_gisplay_name())
+			return None
 
 	def get_last_login_date(self):
-		return self.json["LastLoginDate"]
+		try:
+			return self.json["LastLoginDate"]
+		except:
+			log.error("Returning None for LastLoginDate for %s", self.get_gisplay_name())
+			return None
 
 	def assign_role_to_user(self, role_id):
 		"""
