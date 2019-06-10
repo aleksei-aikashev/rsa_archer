@@ -508,23 +508,25 @@ class ArcherInstance:
 		:param key_value_field: name of the field with unique value that you
 						identified in your application(e.g. "Incident #")
 		:param prefix: adding prefix in front of key_value_field, sometimes in Archer
-		 				key fields are shown like INC-xxx, but in app they only have xxx,
+		 				tranp_key fields are shown like INC-xxx, but in app they only have xxx,
 		 				so to solve that add prefix here, in our case it's INC-
 		:return: Populate Archer_Instance object with self.key_field_value_to_system_id with {field_value:content_record_id}
 		"""
 
 		i = 0
 		for_equal_numbers = 0  # breaks out of the loop if the number of records are equal to 1000
+		all_records = []
 
 		while True:
 			current_records = self.get_grc_endpoint_records(endpoint_url, i)
-			if len(current_records) != 1000 or for_equal_numbers > 21:
+			all_records += current_records
+			if len(current_records) != 1000 or for_equal_numbers > 21: # Attention, if records are more than 21000 increase the value
 				break
 
 			i += 1000
 			for_equal_numbers += 1
 
-		for record in current_records:
+		for record in all_records:
 			if key_value_field:
 				if prefix:
 					field_value = prefix + str(record[key_value_field])
