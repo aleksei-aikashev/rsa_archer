@@ -399,7 +399,7 @@ class ArcherInstance:
 			post_header["X-Http-Method-Override"] = "DELETE"
 			body = json.dumps({"Content": {"Id": record_id, "LevelId": self.application_level_id}})
 		else:
-			log.info("Unable to delete content without provided contentID")
+			log.info("Unable to delete content without provided record_id")
 
 		try:
 			if record_id:
@@ -407,7 +407,7 @@ class ArcherInstance:
 				data = json.loads(response.content.decode("utf-8"))
 				log.info("Function delete_content_record deleted record")
 			else:
-				log.info("Unable to delete record without provided contentID")
+				log.info("Unable to delete record without provided record_id")
 
 		except Exception as e:
 			log.info("Function delete_content_record didn't worked, %s", e)
