@@ -17,7 +17,7 @@ pip install rsa-archer
 Create "api" user in Archer with proper permissions
 At first, create Archer Instance object and continue to work with it
 ```python
-import rsa-archer
+import rsa_archer
 from rsa_archer.archer_instance import ArcherInstance
 archer_instance = ArcherInstance("domain","archer instance name","api username", "password")
 # e.g. 
