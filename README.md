@@ -11,6 +11,8 @@ This package supports archer part of the connector, if someone interested I can 
 > - added archer instance method get_value_id_by_field_name_and_value() to be able to set value in record create/update methods
 
 # Archer REST API  
+## 0. Installation
+pip install rsa-archer
 ## 1. Creating Archer Instance
 Create "api" user in Archer with proper permissions
 At first, create Archer Instance object and continue to work with it
