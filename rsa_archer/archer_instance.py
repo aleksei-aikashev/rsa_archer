@@ -34,7 +34,6 @@ class ArcherInstance:
 		self.application_level_id = ""
 		self.application_fields_json = {}
 		self.all_application_fields_array = []
-		self.application_fields_json = {}
 		self.vl_name_to_vl_id = {}
 		self.subforms_json_by_sf_name = {}
 		self.key_field_value_to_system_id = {}
@@ -88,7 +87,7 @@ class ArcherInstance:
 			return list_of_users
 
 		except Exception as e:
-			log.error("Function get_users didn't worked, %s", e)
+			log.error("Function get_users didn't work, %s", e)
 
 	def get_all_groups(self):
 		"""
@@ -107,7 +106,7 @@ class ArcherInstance:
 			return self
 
 		except Exception as e:
-			log.error("Function get_all_groups didn't worked, %s", e)
+			log.error("Function get_all_groups didn't work, %s", e)
 
 	def find_group(self, name=None):
 		"""
@@ -164,7 +163,7 @@ class ArcherInstance:
 			return User(self, data)
 
 		except Exception as e:
-			log.error("Function get_user_by_id didn't worked, %s", e)
+			log.error("Function get_user_by_id didn't work, %s", e)
 
 	def get_active_users_with_no_login(self):
 		"""
@@ -198,7 +197,7 @@ class ArcherInstance:
 				raise RuntimeError(f'Application "{app_name}" is not found, available applications are {all_folders}')
 
 		except Exception as e:
-			log.error("Function from_application() didn't worked, %s", e)
+			log.error("Function from_application() didn't work, %s", e)
 
 		return self
 
@@ -241,7 +240,7 @@ class ArcherInstance:
 			self.application_level_id = str(level_id) # set the application ID, I found it here
 
 		except Exception as e:
-			log.error("Function get_application_fields() didn't worked, %s", e)
+			log.error("Function get_application_fields() didn't work, %s", e)
 
 	def get_subform_fields_by_id(self, sub_form_id):
 		"""
@@ -269,7 +268,7 @@ class ArcherInstance:
 			return subform_fields_names, fields_ids
 
 		except Exception as e:
-			log.error("Function get_subform_fields_by_id didn't worked, %s", e)
+			log.error("Function get_subform_fields_by_id didn't work, %s", e)
 
 	def get_vl_id_by_field_name(self, vl_field_name):
 		"""
@@ -293,7 +292,7 @@ class ArcherInstance:
 					return ret_arr
 
 		except Exception as e:
-			log.error("Function get_value_id_by_field_name_and_value didn't worked, %s", e)
+			log.error("Function get_value_id_by_field_name_and_value didn't work, %s", e)
 
 	def get_field_id_by_name(self, field_name, sub_form_name=None):
 		"""
@@ -351,7 +350,7 @@ class ArcherInstance:
 			return data["RequestedObject"]["Id"]
 
 		except Exception as e:
-			log.info("Function create_content_record didn't worked, %s", e)
+			log.info("Function create_content_record didn't work, %s", e)
 
 	def create_sub_record(self, fields_json, subform_name):
 		"""LevelID is an application
@@ -383,10 +382,10 @@ class ArcherInstance:
 
 			log.info("Function create_sub_record created record, %s", data["RequestedObject"]["Id"])
 
-			return [data["RequestedObject"]["Id"]]
+			return data["RequestedObject"]["Id"]
 
 		except Exception as e:
-			log.error("Function create_sub_record didn't worked, %s", e)
+			log.error("Function create_sub_record didn't work, %s", e)
 
 	def post_attachment(self, name, base64_string):
 		"""
@@ -407,7 +406,7 @@ class ArcherInstance:
 			return data["RequestedObject"]["Id"]
 
 		except Exception as e:
-			log.error("Function post_attachment didn't worked, %s; Response content: %s", e, response.content)
+			log.error("Function post_attachment didn't work, %s; Response content: %s", e, response.content)
 
 	def update_content_record(self, updated_json, record_id):
 		"""LevelID is an application
@@ -436,7 +435,7 @@ class ArcherInstance:
 			return Record(self, data[0]["RequestedObject"])
 
 		except Exception as e:
-			log.error("Function get_record() didn't worked, %s", e)
+			log.error("Function get_record() didn't work, %s", e)
 
 	def get_sub_record(self, sub_record_id, sub_record_name):
 		"""
@@ -459,7 +458,7 @@ class ArcherInstance:
 			return Record(self, data[0]["RequestedObject"])
 
 		except Exception as e:
-			log.error("Function get_sub_record() didn't worked, %s", e)
+			log.error("Function get_sub_record() didn't work, %s", e)
 
 # THIS PART IS USING ARCHER GRC API, NOT REST API USED ABOVE
 
