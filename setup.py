@@ -10,7 +10,7 @@ requires = [
 
 setup(
 		name='rsa_archer',
-		version='0.1.2',
+		version='0.1.8',
 		author='Aleksei Aikashev',
 		author_email='a.aykashev@gmail.com',
 		description='RSA Archer REST and GRC API library',

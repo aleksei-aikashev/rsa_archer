@@ -4,7 +4,8 @@ My original objective was to create Office365 mail to Archer Incidents applicati
 This package supports archer part of the connector, if someone interested I can share the whole thing.
 
 #### Release notes:
-
+> v0.1.8 (31 Oct 2019)
+> - added delete_record(self, record_id=None) to ArcherInstance and few small fixes
 > v0.1.4 (05 Feb 2019)
 > - added user deactivation method and some user method error handling 
 > v0.1.3 (29 Jan 2019)
@@ -12,7 +13,9 @@ This package supports archer part of the connector, if someone interested I can 
 
 # Archer REST API  
 ## 0. Installation
+```bash
 pip install rsa-archer
+```
 ## 1. Creating Archer Instance
 Create "api" user in Archer with proper permissions
 At first, create Archer Instance object and continue to work with it
