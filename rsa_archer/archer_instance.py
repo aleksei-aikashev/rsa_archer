@@ -387,6 +387,30 @@ class ArcherInstance:
 		except Exception as e:
 			log.error("Function create_sub_record didn't work, %s", e)
 
+	def delete_record(self, record_id=None):
+		"""
+		:param record_id:
+		"""
+		api_url = f"{self.api_url_base}core/content/" + str(record_id)
+		post_header = dict(self.header)
+
+		if record_id:
+			post_header["X-Http-Method-Override"] = "DELETE"
+			body = json.dumps({"Content": {"Id": record_id, "LevelId": self.application_level_id}})
+		else:
+			log.info("Unable to delete content without provided record_id")
+
+		try:
+			if record_id:
+				response = requests.delete(api_url, headers=post_header, data=body, verify=False)
+				data = json.loads(response.content.decode("utf-8"))
+				log.info("Function delete_content_record deleted record")
+			else:
+				log.info("Unable to delete record without provided record_id")
+
+		except Exception as e:
+			log.info("Function delete_content_record didn't worked, %s", e)
+
 	def post_attachment(self, name, base64_string):
 		"""
 		:param name: Name of the attachment
