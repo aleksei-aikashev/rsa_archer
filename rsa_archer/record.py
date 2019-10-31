@@ -26,31 +26,43 @@ class Record:
 		:param field_name: name how you see it in app
 		:returns    value of the field
 					array of Users for user field
-					value for values list
+					LIST of values for values list, including parent value in leveled values list. Looks like this [Parent Value:Value]
 					TODO other types of fields
 		"""
 
 		field_id = self.archer_instance.get_field_id_by_name(field_name)
 		field_type = self.json["FieldContents"][str(field_id)]["Type"]
 
-		if field_type == 4:  # Values List return ValuesListIds, which should be returned {'ValuesListIds': [69809], 'OtherText': None}
-			value_id = self.json["FieldContents"][str(field_id)]["Value"]["ValuesListIds"][0]
-			values_list_id = self.archer_instance.get_vl_id_by_field_name(field_name)
+		try:
+			if field_type == 4:  # Values List return ValuesListIds, which should be returned {'ValuesListIds': [69809], 'OtherText': None}
+				values_list_id = self.archer_instance.get_vl_id_by_field_name(field_name)
+				list_of_value_ids = self.json["FieldContents"][str(field_id)]["Value"]["ValuesListIds"]
 
-			return self.get_value_from_valueslistid(value_id, values_list_id)
+				if len(list_of_value_ids) > 1:
+					multiple_values = []
+					for one_id in list_of_value_ids:
+						returned_value = self.get_value_from_valueslistid(one_id, values_list_id)
+						multiple_values.append(returned_value)
 
-		if field_type == 8:  # User/group list {'UserList': [{'Id': 11077, 'HasRead': True, 'HasUpdate': True, 'HasDelete': False}], 'GroupList': []}
-			user_ids = self.json["FieldContents"][str(field_id)]["Value"]["UserList"]
-			users = []
-			for user in user_ids:
-				users.append(User(self.archer_instance, user_id=user["Id"]))
+					return multiple_values
+				else:
+					value_id = self.json["FieldContents"][str(field_id)]["Value"]["ValuesListIds"][0]
+					return self.get_value_from_valueslistid(value_id, values_list_id)
 
-			return users
-		else:
-			try:
+			if field_type == 8:  # User/group list {'UserList': [{'Id': 11077, 'HasRead': True, 'HasUpdate': True, 'HasDelete': False}], 'GroupList': []}
+				user_ids = self.json["FieldContents"][str(field_id)]["Value"]["UserList"]
+				users = []
+				for user in user_ids:
+					users.append(User(self.archer_instance, user_id=user["Id"]))
+
+				return users
+			else:
 				return self.json["FieldContents"][str(field_id)]["Value"]
-			except:
-				log.error("There is no value for this field, archer!!!")
+
+		except Exception as e:
+			log.info(f"The field {field_name} is empty, return None. Exception %s", e)
+			return None
+
 
 	def get_value_from_valueslistid(self, value_id, values_list_id):
 		"""
@@ -59,8 +71,7 @@ class Record:
 		:param values_list_id: internal field id
 		:return:
 		"""
-		api_url = self.archer_instance.api_url_base + "core/system/valueslistvalue/flat/valueslist/" + str(
-				values_list_id)
+		api_url = self.archer_instance.api_url_base + "core/system/valueslistvalue/flat/valueslist/" + str(values_list_id)
 
 		try:
 			response = requests.get(api_url, headers=self.archer_instance.header, verify=False)
@@ -68,10 +79,15 @@ class Record:
 
 			for value in data:
 				if value["RequestedObject"]["Id"] == value_id:
-					return value["RequestedObject"]["Name"]
+					if value["RequestedObject"]["ParentId"]:
+						parent_value_in_multi_layer_setup = self.get_value_from_valueslistid(
+								value["RequestedObject"]["ParentId"], values_list_id)
+						return parent_value_in_multi_layer_setup + ":" + value["RequestedObject"]["Name"]
+					else:
+						return value["RequestedObject"]["Name"]
 
 		except Exception as e:
-			log.error("Function get_value_from_valueslistid didn't worked, %s", e)
+			log.error("Function get_value_from_valueslistid didn't work, %s", e)
 
 	def get_sequential_id(self):
 		"""

@@ -6,8 +6,10 @@ This package supports archer part of the connector, if someone interested I can 
 #### Release notes:
 > v0.1.8 (31 Oct 2019)
 > - added delete_record(self, record_id=None) to ArcherInstance and few small fixes
+>
 > v0.1.4 (05 Feb 2019)
 > - added user deactivation method and some user method error handling 
+>
 > v0.1.3 (29 Jan 2019)
 > - added archer instance method get_value_id_by_field_name_and_value() to be able to set value in record create/update methods
 
