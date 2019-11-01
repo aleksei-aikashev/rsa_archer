@@ -47,7 +47,7 @@ class Record:
 					return multiple_values
 				else:
 					value_id = self.json["FieldContents"][str(field_id)]["Value"]["ValuesListIds"][0]
-					return self.get_value_from_valueslistid(value_id, values_list_id)
+					return list(self.get_value_from_valueslistid(value_id, values_list_id))
 
 			if field_type == 8:  # User/group list {'UserList': [{'Id': 11077, 'HasRead': True, 'HasUpdate': True, 'HasDelete': False}], 'GroupList': []}
 				user_ids = self.json["FieldContents"][str(field_id)]["Value"]["UserList"]
