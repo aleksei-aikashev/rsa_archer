@@ -47,7 +47,7 @@ class Record:
 					return multiple_values
 				else:
 					value_id = self.json["FieldContents"][str(field_id)]["Value"]["ValuesListIds"][0]
-					return list(self.get_value_from_valueslistid(value_id, values_list_id))
+					return [self.get_value_from_valueslistid(value_id, values_list_id)]
 
 			if field_type == 8:  # User/group list {'UserList': [{'Id': 11077, 'HasRead': True, 'HasUpdate': True, 'HasDelete': False}], 'GroupList': []}
 				user_ids = self.json["FieldContents"][str(field_id)]["Value"]["UserList"]
@@ -80,8 +80,7 @@ class Record:
 			for value in data:
 				if value["RequestedObject"]["Id"] == value_id:
 					if value["RequestedObject"]["ParentId"]:
-						parent_value_in_multi_layer_setup = self.get_value_from_valueslistid(
-								value["RequestedObject"]["ParentId"], values_list_id)
+						parent_value_in_multi_layer_setup = self.get_value_from_valueslistid(value["RequestedObject"]["ParentId"], values_list_id)
 						return parent_value_in_multi_layer_setup + ":" + value["RequestedObject"]["Name"]
 					else:
 						return value["RequestedObject"]["Name"]
