@@ -4,6 +4,12 @@ My original objective was to create Office365 mail to Archer Incidents applicati
 This package supports archer part of the connector, if someone interested I can share the whole thing.
 
 #### Release notes:
+> v0.1.9 (13 Dec 2019)
+> - Fixed method get_field_content in Record, fixed error when method crashed if the value in values list is None
+> - Now, if there are several values in values list. Function will return all values, including parent value if you're using leveled values list. 
+> - Looks like this ["Parent Value:Value", "Parent Value:Value", "Value"]
+> - ATTENTION!!! now function returns LIST of values instead of string value.
+>
 > v0.1.8 (31 Oct 2019)
 > - added delete_record(self, record_id=None) to ArcherInstance and few small fixes
 >
